@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Upload Frontend</title>
+
+<style>
+body {
+    background-color: rgb(6, 26, 27);
+}
+* {
+    box-sizing: border-box;
+}
+.container {
+    max-width: 500px;
+    margin: 60px auto;
+}
+.container h1 {
+    text-align: center;
+    color: white;
+}
+form {
+    background-color: white;
+    padding: 30px;
+}
+form .input-group {
+    margin-bottom: 15px;
+}
+form label {
+    display: block;
+    margin-bottom: 10px;
+}
+form input {
+    padding: 12px 20px;
+    width: 100%;
+    border: 1px solid #ccc;
+}
+.submit-btn {
+    width: 100%;
+    border: none;
+    background: rgb(37, 83, 3);
+    font-size: 18px;
+    color: white;
+    border-radius: 3px;
+    padding: 20px;
+    text-align: center;
+}
+</style>
+
+</head>
+<!-- index.html -->
+
+
+<body onload="setTime()">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">  	
+
+	
+	
+<div class="container">
+  
+	<div class="w3-container">		
+	 <div id="id01" class="w3-modal">
+		<div class="w3-modal-content">
+		  <div class="w3-container w3-blue">
+		   
+			<p class = "w3-center w3-blue ">Please wait - saving files </p>
+			
+		  </div>
+		</div>
+	  </div>
+	</div>    
+		
+        <h1>Uploading</h1>
+        <form id='form'>
+            <div class="input-group">
+                <label for='name'>Nazwa Folderu</label>
+                <input type='text' id='name' value ='MojaData'/>
+                <label for='TextOn'>Informacja o zakonczeniu</label>
+                <input type='text' id='TextOn' value ='Jesli zapisze, dam znac'/>
+            </div>
+            <div class="input-group">
+                <label for='files'>Select files</label>
+                <input id='files' type="file" multiple>
+            </div>
+            <button class="submit-btn" type='submit' onclick = "document.getElementById('id01').style.display='block'">Upload</button>
+        </form>
+
+</div>
+    
+    
+<script>  /* setting the date format */ 
+	 var da = new Date();
+		
+	 var monthdays = ["01","02","03","04","05","06","07","08","09","10",
+					  "11","12","13","14","15","16","17","18","19","20",
+					  "21","22","23","24","25","26","27","28","29","30","31"];
+	 var monthd = monthdays[da.getDate()-1];
+	 var yearmonth = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+	 var yearm = yearmonth[da.getMonth()];
+	 var fully = da.getFullYear();
+	 var hours = da.getHours();
+	 var minut = da.getMinutes();
+	 var secon = da.getSeconds();
+	 
+	 var ddat = fully +"_"+ yearm +"_"+ monthd +":"+ hours +":"+ minut +":"+ secon;
+
+	 function setTime(){
+		var doc = document.getElementById("name").value = ddat;
+			}
+</script>
+
+<script>
+/* main form and sending to server */
+const form = document.getElementById("form");
+
+form.addEventListener("submit", submitForm);
+
+function submitForm(e) {
+    e.preventDefault();
+    const name = document.getElementById("name");
+    const files = document.getElementById("files");
+    const formData = new FormData();
+    formData.append("name", name.value);
+        for(let i =0; i < files.files.length; i++) {
+            formData.append("files", files.files[i]);
+            console.log("files ", files.files[i]);
+    }
+    fetch('http://localhost:8080/upload_files', {
+        method: 'post',
+        body: formData
+    })
+        .then((res) => console.log("res of Front: ", res))
+        .catch((err) => ("Error occured", err));
+        
+        takeMe();
+}
+
+function takeMe() {
+var dataName = [];
+ 
+var request = async () => {
+var response = await fetch('http://localhost:8080/api');
+  
+    var data = await response.json();
+    dataName = data[0];
+    console.log('data: ',dataName.info); 
+    
+var name = document.getElementById('TextOn').value = dataName.info;
+timeRefresh();
+    function timeRefresh() {
+		 var time = 9999;
+        var setT = setTimeout("location.reload(true);", time);
+        
+        if (setT != 1) {
+        document.getElementById('id01').style.display='none';
+		}
+      }		 	    
+   }
+   
+request();
+}		
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Upload Frontend</title>
+
+<link href="style.css" rel="stylesheet" >
+
+</head>
+<!-- index.html -->
+
+
+<body onload="setTime()">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">  	
+
+	
+	
+<div class="container">
+  
+	<div class="w3-container">		
+	 <div id="id01" class="w3-modal">
+		<div class="w3-modal-content">
+		  <div class="w3-container w3-blue">
+		   
+			<p class = "w3-center w3-blue ">Please wait - saving files </p>
+			
+		  </div>
+		</div>
+	  </div>
+	</div>    
+		
+        <h1>Wysylanie Plikow</h1>
+        <form id='form'>
+            <div class="input-group">
+                <label for='name'>Nazwa Folderu</label>
+                <input type='text' id='name' value ='MojaData'/>
+                <label for='TextOn'>Informacja o zakonczeniu</label>
+                <input type='text' id='TextOn' value ='Jesli zapisze, dam znac'/>
+            </div>
+            <div class="input-group">
+                <label for='files'>Select files</label>
+                <input id='files' type="file" multiple>
+            </div>
+            <button class="submit-btn" type='submit' onclick = "document.getElementById('id01').style.display='block'">Upload</button>
+        </form>
+
+</div>
+    
+    
+<script>  /* setting the date format */ 
+	 var da = new Date();
+		
+	 var monthdays = ["01","02","03","04","05","06","07","08","09","10",
+					  "11","12","13","14","15","16","17","18","19","20",
+					  "21","22","23","24","25","26","27","28","29","30","31"];
+	 var monthd = monthdays[da.getDate()-1];
+	 var yearmonth = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+	 var yearm = yearmonth[da.getMonth()];
+	 var fully = da.getFullYear();
+	 var hours = da.getHours();
+	 var minut = da.getMinutes();
+	 var secon = da.getSeconds();
+	 
+	 var ddat = fully +"_"+ yearm +"_"+ monthd +":"+ hours +":"+ minut +":"+ secon;
+
+	 function setTime(){
+		var doc = document.getElementById("name").value = ddat;
+			}
+</script>
+
+    <script src='./scriptToUpload.js'></script>
+</body>
+</html>
