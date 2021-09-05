@@ -48,4 +48,5 @@ timeRefresh();
    }
    
 request();
+/* sending request */
 }
